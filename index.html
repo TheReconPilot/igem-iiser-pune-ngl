@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>NGL Viewer Test Phase</title>
+        <link rel="stylesheet" href="bootstrap.min.css">
+    </head>
+    <body>
+        
+        <div class="container text-center my-3">
+          <h1 class="display">NGL Viewer Test</h1>
+            <div class="card m-5">
+                <div class="card-header">5MZA</div>
+                <div class="card-body">
+                    <div id="modelViewport" style="width: 600px; height: 450px; margin: auto;"></div>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+        <script src="ngl.js"></script>
+        <script>
+            // Create NGL Stage object
+            var stage = new NGL.Stage("modelViewport", {backgroundColor: 'white'});
+
+            // Handle window resizing
+            window.addEventListener("resize", function (event) {
+                stage.handleResize();
+            }, false);
+
+            // Code for : interactive-viewer
+            function addElement(el) {
+                Object.assign(el.style, {
+                    position: "absolute",
+                    zIndex: 10
+                });
+                stage.viewer.container.appendChild(el);
+            }
+
+            function createElement(name, properties, style) {
+                var el = document.createElement(name);
+                Object.assign(el, properties);
+                Object.assign(el.style, style);
+                return el;
+            }
+
+            function createSelect(options, properties, style) {
+                var select = createElement("select", properties, style);
+                options.forEach(function (d) {
+                    select.add(createElement("option", {
+                        value: d[0], text: d[1]
+                    }))
+                });
+                return select
+            }
+
+            function loadStructure(input) {
+                stage.removeAllComponents();
+                return stage.loadFile(input, {ext: 'pdb'}).then(function (o) {
+                    o.autoView();
+                    o.addRepresentation(polymerSelect.value, {
+                        sele: "all",
+                        name: "all",
+                        colorScheme: "chainindex"
+                    });
+                    // o.addRepresentation("spacefill", {
+                    //         sele: "ligand",
+                    //         aspectRatio: 3.0
+                    //     }
+                    // );
+                })
+            }
+
+            var polymerSelect = createSelect([
+                ["cartoon", "Cartoon"],
+                ["ribbon", "Ribbon"],
+                ["rope", "Rope"],
+                ["tube", "Tube"],
+                ["trace", "Trace"],
+                ["backbone", "Backbone"],
+                ["line", "Lines"],
+                ["ball+stick", "Ball & Stick"],
+                ["licorice", "Licorice"],
+                ["hyperball", "Hyperball"],
+                ["surface", "Surface"],
+                ["spacefill", "Spacefill"],
+                ["helixorient", "Helixorient"],
+                ["point", "Point"],
+                ["rocket", "Rocket"],
+                ["label", "Label"]
+            ], {
+                onchange: function (e) {
+                    stage.getRepresentationsByName("all").dispose();
+                    stage.eachComponent(function (o) {
+                        o.addRepresentation(e.target.value, {
+                            sele: "all",
+                            name: "all",
+                            colorScheme: "chainindex",
+                            surfaceType: "av",
+                            labelType: "residue name",
+                        })
+                    })
+                }
+            }, {top: "100px", left: "10px"});
+            addElement(polymerSelect);
+
+
+            var centerButton = createElement("input", {
+                type: "button",
+                value: "Center",
+                onclick: function () {
+                    stage.autoView(1000)
+                }
+            }, {top: "160px", left: "10px"});
+            addElement(centerButton);
+
+            var toggle_spin = false;
+            var spinButton = createElement("input", {
+                type: "button",
+                value: "Spin",
+                onclick: function () {
+                    if (toggle_spin === false) {
+                        stage.setSpin(true);
+                        toggle_spin = true;
+                        stage.setRock(false);
+                        toggle_rock = false;
+                        
+                    } else if (toggle_spin === true) {
+                        stage.setSpin(false);
+                        toggle_spin = false;
+                        console.log(toggle_spin);
+                    }
+                }
+            }, {top: "210px", left: "10px"});
+            addElement(spinButton);
+
+            var toggle_rock = false;
+            var rockButton = createElement("input", {
+                type: "button",
+                value: "Rock",
+                onclick: function () {
+                    if (toggle_rock === false) {
+                        stage.setRock(true);
+                        toggle_rock = true;
+                        stage.setSpin(false);
+                        toggle_spin = false;
+                        
+                    } else if (toggle_rock === true) {
+                        stage.setRock(false);
+                        toggle_rock = false;
+                        console.log(toggle_rock);
+                    }
+                }
+            }, {top: "260px", left: "10px"});
+            addElement(rockButton);
+
+            loadStructure("5mza.txt");
+        </script>
+
+    </body>
+</html>
