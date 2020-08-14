@@ -4,6 +4,11 @@
         <meta charset="utf-8">
         <title>NGL Viewer Test Phase</title>
         <link rel="stylesheet" href="bootstrap.min.css">
+
+        <!-- Prevent Favicon Request -->
+        <!-- Source: https://webdesign.tutsplus.com/tutorials/prevent-automatic-favicon-requests--cms-34762 -->
+        <link rel="icon" href="data:,">
+        
     </head>
     <body>
         
@@ -71,7 +76,7 @@
                     o.addRepresentation(polymerSelect.value, {
                         sele: "all",
                         name: "all",
-                        colorScheme: "chainindex"
+                        colorScheme: "atomindex"
                     });
                     // o.addRepresentation("spacefill", {
                     //         sele: "ligand",
@@ -80,6 +85,10 @@
                     // );
                 })
             }
+
+            addElement(createElement("span", {
+              innerText: "Representation: "
+            }, { top: '65px', left: "10px" }))
 
             var polymerSelect = createSelect([
                 ["cartoon", "Cartoon"],
@@ -105,15 +114,52 @@
                         o.addRepresentation(e.target.value, {
                             sele: "all",
                             name: "all",
-                            colorScheme: "chainindex",
-                            surfaceType: "av",
-                            labelType: "residue name",
+                            colorScheme: colorSelect.value
                         })
                     })
                 }
-            }, {top: "100px", left: "10px"});
+            }, {top: "90px", left: "10px"});
             addElement(polymerSelect);
 
+            addElement(createElement("span", {
+              innerText: "Color by: "
+            }, { top: '125px', left: "10px" }))
+
+            // Code to add a uniform color to scheme:
+            // var lightgrey = NGL.ColormakerRegistry.addScheme(function (params) {this.atomColor = function (atom) {return 0xCDCDCD }})
+
+            var colorSelect = createSelect([
+              ['atomindex', 'Atom Index'],
+              ['bfactor', 'B Factor'],
+              ['chainid', 'Chain ID'],
+              ['chainindex', 'Chain Index'],
+              ['chainname', 'Chain Name'],
+              ['element', 'Element'],
+              ['entityindex', 'Entity Index'],
+              ['entitytype', 'Entity Type'],
+              ['geoquality', 'Geo Quality'],
+              ['hydrophobicity', 'Hydrophobicity'],
+              ['modelindex', 'Model Index'],
+              ['moleculetype', 'Molecule Type'],
+              ['occupancy', 'Occupancy'],
+              ['random', 'Random'],
+              ['residueindex', 'Residue Index'],
+              ['resname', 'Residue Name'],
+              ['sstruc', 'Secondary Structure'],
+              // ['uniform', 'Uniform']
+            ], {
+              onchange: function(e) {
+                stage.getRepresentationsByName("all").dispose();
+                stage.eachComponent(function (o) {
+                  o.addRepresentation(polymerSelect.value, {
+                    sele: 'all',
+                    name: 'all',
+                    colorScheme: e.target.value
+                  })
+                })
+              }
+            }, {top: "150px", left: "10px"});
+            addElement(colorSelect);
 
             var centerButton = createElement("input", {
                 type: "button",
@@ -121,7 +167,7 @@
                 onclick: function () {
                     stage.autoView(1000)
                 }
-            }, {top: "160px", left: "10px"});
+            }, {top: "200px", left: "10px"});
             addElement(centerButton);
 
             var toggle_spin = false;
@@ -141,7 +187,7 @@
                         console.log(toggle_spin);
                     }
                 }
-            }, {top: "210px", left: "10px"});
+            }, {top: "250px", left: "10px"});
             addElement(spinButton);
 
             var toggle_rock = false;
@@ -161,7 +207,7 @@
                         console.log(toggle_rock);
                     }
                 }
-            }, {top: "260px", left: "10px"});
+            }, {top: "300px", left: "10px"});
             addElement(rockButton);
 
             loadStructure("5mza.txt");
