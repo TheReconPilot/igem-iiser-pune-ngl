@@ -28,6 +28,11 @@
                 margin-top: 20px;
             }
 
+            @media only screen and (min-width: 768px) {
+                .small-screen-warning {
+                    display: none;
+                }
+            }
 
         </style>
     </head>
@@ -35,13 +40,10 @@
         
         <div class="container text-center ngl-heading">
           <h1 class="display">NGL Viewer</h1>
+          <p class="alert alert-danger small-screen-warning">Smaller screens like this may not display the model viewer correctly. This works best on desktop screens.</p>
             <div class="card my-3 ngl-card">
                 <div class="card-header">
                     <h2 id="modelName">5MZA</h2>
-                    <!-- <div class="btn-group btn-group-lg" role="group" aria-label="Select Model">
-                        <button type="button" class="btn btn-info">5MZA</button>
-                        <button type="button" class="btn btn-info">Model 1 Repair</button>
-                    </div> -->
                 </div>
                 <div class="card-body">
                     <div id="modelViewport" style="width: 600px; height: 450px; margin: auto;">
