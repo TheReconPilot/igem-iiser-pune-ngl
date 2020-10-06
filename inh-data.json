@@ -1,0 +1,72 @@
+{
+    "4u0q-inh1": {
+        "name": "4U0Q (Inhbitor-1)",
+        "sequence": "YYYWMWMF",
+        "type": "Hybrid",
+        "length": "8 AA",
+        "ie": "-9.15353"
+    },
+    "4u0q-inh2": {
+        "name": "4U0Q (Inhbitor-2)",
+        "sequence": "NPMPMFDMEY",
+        "type": "Hybrid",
+        "length": "10 AA",
+        "ie": "-13.1215"
+    },
+    "4u0q-inh3": {
+        "name": "4U0Q (Inhbitor-3)",
+        "sequence": "SRSVPPV",
+        "type": "Mutant",
+        "length": "7 AA",
+        "ie": "-7.29194"
+    },
+    "5mza-inh1": {
+        "name": "5MZA (Inhbitor-1)",
+        "sequence": "GVPRGGIDF",
+        "type": "Hybrid",
+        "length": "9 AA",
+        "ie": "-11.04"
+    },
+    "5mza-inh2": {
+        "name": "5MZA (Inhbitor-2)",
+        "sequence": "ILPRGGIVL",
+        "type": "Mutant",
+        "length": "9 AA",
+        "ie": "-9.69483"
+    },
+    "6s8u-inh1": {
+        "name": "6S8U (Inhbitor-1)",
+        "sequence": "TSVQPSKVILP",
+        "type": "Mutant",
+        "length": "11 AA",
+        "ie": "-9.33515"
+    },
+    "6s8u-inh2": {
+        "name": "6S8U (Inhbitor-2)",
+        "sequence": "TSVWPSKVILP",
+        "type": "Mutant",
+        "length": "11 AA",
+        "ie": "-8.41915"
+    },
+    "5lgd-inh1": {
+        "name": "5LGD (Inhbitor-1)",
+        "sequence": "NQFVQMILNM",
+        "type": "Mutant",
+        "length": "10 AA",
+        "ie": "-18.8211"
+    },
+    "5lgd-inh2": {
+        "name": "5LGD (Inhbitor-2)",
+        "sequence": "NQFVQMILNF",
+        "type": "Mutant",
+        "length": "10 AA",
+        "ie": "-18.7332"
+    },
+    "5lgd-inh3": {
+        "name": "5LGD (Inhbitor-3)",
+        "sequence": "NQFVQMILNW",
+        "type": "Mutant",
+        "length": "10 AA",
+        "ie": "-18.4663"
+    }
+}

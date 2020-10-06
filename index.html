@@ -20,6 +20,11 @@
                 border: 1px solid whitesmoke;
             }
 
+            canvas {
+                position: relative;
+                right: 25px;
+            }
+
             #modelViewport {
                 margin-bottom: 30px !important;
             }
@@ -32,6 +37,13 @@
                 .small-screen-warning {
                     display: none;
                 }
+            }
+
+            table {
+                max-width: 200px;
+                position: absolute;
+                top: 300px;
+                left: 850px;
             }
 
         </style>
@@ -47,7 +59,25 @@
                 </div>
                 <div class="card-body">
                     <div id="modelViewport" style="width: 600px; height: 450px; margin: auto;">
-                        <a role="button" href="ngl-data.zip" class="btn btn-info" style="top: 230px; right: 51px; position: absolute; z-index: 10"><svg style="position:relative;bottom:0.1rem;" width="1rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"/></svg> Download Data</a>
+                        <a role="button" href="ngl-data.zip" class="btn btn-info" style="top: 215px; right: 81px; position: absolute; z-index: 10"><svg style="position:relative;bottom:0.1rem;" width="1rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"/></svg> Download Data</a>
+                        <table class="table table-bordered table-dark m-auto text-left table-hover">
+                            <tr>
+                                <th scope="row">Sequence</th>
+                                <td id="modelSequence"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Type</th>
+                                <td id="modelType"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Length</th>
+                                <td id="modelLength"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">I.E.</th>
+                                <td id="modelIE"></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -55,6 +85,83 @@
 
 
         <script>
+
+            // Load All Data
+            const rawdata = `{
+                    "4u0q-inh1": {
+                        "name": "4U0Q (Inhbitor-1)",
+                        "sequence": "YYYWMWMF",
+                        "type": "Hybrid",
+                        "length": "8 AA",
+                        "ie": "-9.15353"
+                    },
+                    "4u0q-inh2": {
+                        "name": "4U0Q (Inhbitor-2)",
+                        "sequence": "NPMPMFDMEY",
+                        "type": "Hybrid",
+                        "length": "10 AA",
+                        "ie": "-13.1215"
+                    },
+                    "4u0q-inh3": {
+                        "name": "4U0Q (Inhbitor-3)",
+                        "sequence": "SRSVPPV",
+                        "type": "Mutant",
+                        "length": "7 AA",
+                        "ie": "-7.29194"
+                    },
+                    "5mza-inh1": {
+                        "name": "5MZA (Inhbitor-1)",
+                        "sequence": "GVPRGGIDF",
+                        "type": "Hybrid",
+                        "length": "9 AA",
+                        "ie": "-11.04"
+                    },
+                    "5mza-inh2": {
+                        "name": "5MZA (Inhbitor-2)",
+                        "sequence": "ILPRGGIVL",
+                        "type": "Mutant",
+                        "length": "9 AA",
+                        "ie": "-9.69483"
+                    },
+                    "6s8u-inh1": {
+                        "name": "6S8U (Inhbitor-1)",
+                        "sequence": "TSVQPSKVILP",
+                        "type": "Mutant",
+                        "length": "11 AA",
+                        "ie": "-9.33515"
+                    },
+                    "6s8u-inh2": {
+                        "name": "6S8U (Inhbitor-2)",
+                        "sequence": "TSVWPSKVILP",
+                        "type": "Mutant",
+                        "length": "11 AA",
+                        "ie": "-8.41915"
+                    },
+                    "5lgd-inh1": {
+                        "name": "5LGD (Inhbitor-1)",
+                        "sequence": "NQFVQMILNM",
+                        "type": "Mutant",
+                        "length": "10 AA",
+                        "ie": "-18.8211"
+                    },
+                    "5lgd-inh2": {
+                        "name": "5LGD (Inhbitor-2)",
+                        "sequence": "NQFVQMILNF",
+                        "type": "Mutant",
+                        "length": "10 AA",
+                        "ie": "-18.7332"
+                    },
+                    "5lgd-inh3": {
+                        "name": "5LGD (Inhbitor-3)",
+                        "sequence": "NQFVQMILNW",
+                        "type": "Mutant",
+                        "length": "10 AA",
+                        "ie": "-18.4663"
+                    }
+                }`;
+
+            var data = JSON.parse(rawdata)
+
             // Create NGL Stage object
             var stage = new NGL.Stage("modelViewport", {backgroundColor: '#20214'});
 
@@ -236,24 +343,40 @@
             }, {top: "400px", left: "20px"});
             addElement(rockButton);
 
-            loadStructure("5mza.txt");
-            stage.setSpin(true);
-
             addElement(createElement("span", {
               innerText: "Model: "
-            }, { top: '120px', right: "157px" }))
+            }, { top: '120px', right: "187px" }))
 
             var modelSelect = createSelect([
-                ["5mza", "5MZA"],
-                ["model1-repair", "Model-1 Repair"],
+                ["4u0q-inh1", "4U0Q (Inh-1)"],
+                ["4u0q-inh2", "4U0Q (Inh-2)"],
+                ["4u0q-inh3", "4U0Q (Inh-3)"],
+                ["5mza-inh1", "5MZA (Inh-1)"],
+                ["5mza-inh2", "5MZA (Inh-2)"],
+                ["6s8u-inh1", "6S8U (Inh-1)"],
+                ["6s8u-inh2", "6S8U (Inh-2)"],
+                ["5lgd-inh1", "5LGD (Inh-1)"],
+                ["5lgd-inh2", "5LGD (Inh-2)"],
+                ["5lgd-inh3", "5LGD (Inh-3)"]
             ], {
                 onchange: function (e) {
-                    stage.getRepresentationsByName("all").dispose();
-                    loadStructure(modelSelect.value + ".txt")
-                    $('#modelName').text($('option[value=' + modelSelect.value + ']').text());
+                    stage.getRepresentationsByName("all").dispose(); 
+                    setData(modelSelect.value)
                 }
-            }, {top: "150px", right: "50px"});
+            }, {top: "150px", right: "94px"});
             addElement(modelSelect);
+
+            function setData(mid) {
+                loadStructure(mid + ".txt")
+                $('#modelName').text(data[mid]['name']);
+                $('#modelSequence').text(data[mid]['sequence'])
+                $('#modelType').text(data[mid]['type'])
+                $('#modelLength').text(data[mid]['length'])
+                $('#modelIE').text(data[mid]['ie'])
+            }
+
+            setData("4u0q-inh1");
+            stage.setSpin(true);
 
             $('select').addClass('btn btn-primary')
             $('input').addClass('btn btn-danger')
