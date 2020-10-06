@@ -46,6 +46,8 @@
                 left: 850px;
             }
 
+
+
         </style>
     </head>
     <body>
@@ -200,10 +202,10 @@
                 stage.removeAllComponents();
                 return stage.loadFile(input, {ext: 'pdb'}).then(function (o) {
                     o.autoView();
-                    o.addRepresentation(polymerSelect.value, {
+                    o.addRepresentation(representationSelect.value, {
                         sele: "all",
                         name: "all",
-                        colorScheme: "atomindex"
+                        colorScheme: colorSelect.value
                     });
                     // o.addRepresentation("spacefill", {
                     //         sele: "ligand",
@@ -218,7 +220,7 @@
               innerText: "Representation: "
             }, { top: '120px', left: "20px" }))
 
-            var polymerSelect = createSelect([
+            var representationSelect = createSelect([
                 ["cartoon", "Cartoon"],
                 ["ribbon", "Ribbon"],
                 ["rope", "Rope"],
@@ -247,7 +249,7 @@
                     })
                 }
             }, {top: "150px", left: "20px"});
-            addElement(polymerSelect);
+            addElement(representationSelect);
 
             // Color Menu
             addElement(createElement("span", {
@@ -280,7 +282,7 @@
               onchange: function(e) {
                 stage.getRepresentationsByName("all").dispose();
                 stage.eachComponent(function (o) {
-                  o.addRepresentation(polymerSelect.value, {
+                  o.addRepresentation(representationSelect.value, {
                     sele: 'all',
                     name: 'all',
                     colorScheme: e.target.value
@@ -373,6 +375,14 @@
                 $('#modelType').text(data[mid]['type'])
                 $('#modelLength').text(data[mid]['length'])
                 $('#modelIE').text(data[mid]['ie'])
+            }
+
+            if (!representationSelect.value) {
+                representationSelect.value = 'cartoon'
+            }
+
+            if (!colorSelect.value) {
+                colorSelect.value = 'atomindex'
             }
 
             setData("4u0q-inh1");
