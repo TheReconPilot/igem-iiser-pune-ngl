@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+{{IISER-Pune-India/navbar}}
+<html>
     <head>
         <meta charset="utf-8">
         <title>NGL Viewer Test Phase</title>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-
         <link rel="stylesheet" href="bootstrap.min.css">
-        <script src="ngl.js"></script>
+
+
+        <script type="text/javascript" src="https://2020.igem.org/wiki/index.php?title=Template:IISER-Pune-India/ngl.js&action=raw&ctype=text/javascript"></script>
+
         
         <style>
 
@@ -39,14 +41,24 @@
                 }
             }
 
-            table {
-                max-width: 200px;
+            .table {
+                width: 200px;
                 position: absolute;
                 top: 300px;
                 left: 850px;
             }
 
+            #top_title {
+                display: none;
+            }
 
+            #globalWrapper {
+                margin-top: -20px;
+            }
+
+            #modelName {
+                color: #F8F9FA;
+            }
 
         </style>
     </head>
@@ -55,13 +67,13 @@
         <div class="container text-center ngl-heading">
           <h1 class="display">NGL Viewer</h1>
           <p class="alert alert-danger small-screen-warning">Smaller screens like this may not display the model viewer correctly. This works best on desktop screens.</p>
-            <div class="card my-3 ngl-card">
+            <div class="card my-3 ngl-card text-light">
                 <div class="card-header">
                     <h2 id="modelName">5MZA</h2>
                 </div>
                 <div class="card-body">
                     <div id="modelViewport" style="width: 600px; height: 450px; margin: auto;">
-                        <a role="button" href="ngl-data.zip" class="btn btn-info" style="top: 215px; right: 81px; position: absolute; z-index: 10"><svg style="position:relative;bottom:0.1rem;" width="1rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"/></svg> Download Data</a>
+                        <a role="button" href="ngl-data.zip" class="btn btn-info" style="top: 215px; right: 81px; position: absolute;"><svg style="position:relative;bottom:0.1rem;" width="1rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"/></svg> Download Data</a>
                         <table class="table table-bordered table-dark m-auto text-left table-hover">
                             <tr>
                                 <th scope="row">Sequence</th>
@@ -159,7 +171,22 @@
                         "type": "Mutant",
                         "length": "10 AA",
                         "ie": "-18.4663"
+                    },
+                    "4v3d-inh1": {
+                        "name": "4V3D (Inhbitor-1)",
+                        "sequence": "TFTLQLLNAYNRTR",
+                        "type": "Mutant",
+                        "length": "14 AA",
+                        "ie": "-5.96088"
+                    },
+                    "5lgd-inh3": {
+                        "name": "4V3D (Inhbitor-2)",
+                        "sequence": "YMRDKLMIGYWRLR",
+                        "type": "Hybrid",
+                        "length": "14 AA",
+                        "ie": "-7.2986"
                     }
+                    
                 }`;
 
             var data = JSON.parse(rawdata)
@@ -175,8 +202,7 @@
             // Code for : interactive-viewer
             function addElement(el) {
                 Object.assign(el.style, {
-                    position: "absolute",
-                    zIndex: 10
+                    position: "absolute"
                 });
                 stage.viewer.container.appendChild(el);
             }
@@ -359,7 +385,9 @@
                 ["6s8u-inh2", "6S8U (Inh-2)"],
                 ["5lgd-inh1", "5LGD (Inh-1)"],
                 ["5lgd-inh2", "5LGD (Inh-2)"],
-                ["5lgd-inh3", "5LGD (Inh-3)"]
+                ["5lgd-inh3", "5LGD (Inh-3)"],
+                ["4v3d-inh1", "4V3D (Inh-1)"],
+                ["4v3d-inh2", "4V3D (Inh-2)"]
             ], {
                 onchange: function (e) {
                     stage.getRepresentationsByName("all").dispose(); 
@@ -369,7 +397,7 @@
             addElement(modelSelect);
 
             function setData(mid) {
-                loadStructure(mid + ".txt")
+                loadStructure("https://2020.igem.org/wiki/index.php?title=Template:IISER-Pune-India/ngl-data/" + mid + ".pdb&action=raw&ctype=text/plain")
                 $('#modelName').text(data[mid]['name']);
                 $('#modelSequence').text(data[mid]['sequence'])
                 $('#modelType').text(data[mid]['type'])
@@ -395,3 +423,4 @@
 
     </body>
 </html>
+{{IISER-Pune-India/footer}}
